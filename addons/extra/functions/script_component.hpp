@@ -1,0 +1,1 @@
+#include "\z\dzn_FLAC\addons\cookbook\script_component.hpp"

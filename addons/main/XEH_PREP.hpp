@@ -1,0 +1,2 @@
+PREP(handleLoadoutChange);
+PREP(getAttachmentReplaceOption);

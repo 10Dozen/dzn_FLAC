@@ -1,0 +1,22 @@
+name = "dzn Flexible Accessories"
+prefix = "dzn_FLAC"
+author = "10Dozen"
+files = [
+    "mod.cpp"
+]
+exclude = [
+    "*.psd",
+    "*.png",
+    "*.tga"
+]
+
+postbuild = [
+    "!build"
+]
+
+[scripts.build]
+steps = [
+    "echo [Copying compats...]",
+    "copy compats\\*.pbo addons\\"
+]
+show_output = true
