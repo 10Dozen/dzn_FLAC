@@ -51,7 +51,8 @@ private _fnc_formatAction = {
         { true },
         { _this call FUNC(disassemble) },
         true,
-        [_item1, _item2]
+        [_item1, _item2],
+        false
     ]
 };
 

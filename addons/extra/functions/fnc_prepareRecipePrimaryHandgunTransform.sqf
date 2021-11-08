@@ -40,12 +40,12 @@ private _fnc_formatAction = {
 
     private _isRifleAction = (_slot == "RIFLE");
 
-    private _text = ["primary","pistol"] select _isRifleAction
+    private _text = ["primary","pistol"] select _isRifleAction;
     private _displayName = format [_actionDisplayName, _text];
     private _tooltip = format [_actionTooltip, _text];
     private _condition = [
-        {primaryWeapon _this # 0 == ""},
-        {handgunWeapon _this # 0 == ""}
+        { primaryWeapon (_this # 0) == "" },
+        { handgunWeapon (_this # 0) == "" }
     ] select _isRifleAction;
 
     TRACE_8("* Format Primary-Secondary action", _slot, _item, _switchToItem, _isRifleAction, _text, _displayName, _tooltip, _condition);
@@ -56,9 +56,10 @@ private _fnc_formatAction = {
         [_displayName, _tooltip],
         [], "",
         _condition,
-        { _this call FUNC(primarySecondaryTransform) },
+        { _this call FUNC(primaryHandgunTransform) },
         false,
-        _switchToItem
+        _switchToItem,
+        false
     ]
 };
 

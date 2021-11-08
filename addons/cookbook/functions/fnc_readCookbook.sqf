@@ -34,29 +34,31 @@ LOG_1("[COOKBOOK Read] Custom Recepies: %1", _customRecipes);
 _allRecipes append _customRecipes;
 
 {
-    private _enabled = call compile format [QGVAR(_%1_Enabled), _x];
+    private _enabled = call compile format [QGVAR(%1_Enabled), _x];
     LOG_2("[COOKBOOK Read] Reading recipe [%1]: Enabled: %2", _x, _enabled);
 
     // --- Process only recipes enabled in settings
-    if (call compile format [QGVAR(_%1_Enabled), _x]) then {
+    if (call compile format [QGVAR(%1_Enabled), _x]) then {
         private _recipeCfg = configFile >> "CfgFLAC_Cookbook" >> _x;
         private _recipeFunctionName = getText (_recipeCfg >> "recipeFunction");
-        private _recipeFunction = missionNamespace getVariable [_recipeFunctionName, nil];
+        private _recipeFunction = missionNamespace getVariable [getText (_recipeCfg >> "recipeFunction"), nil];
 
-        TRACE_3("params", _x, _recipeCfg, _recipeFunctionName);
+        TRACE_3("params", _x, _recipeCfg, _recipeFunctionName, isNil "_recipeFunction");
 
         if (isNil "_recipeFunction") then {
             // Some error message here...
-            LOG("Failed to find Recipe's function %1. Skipping...", _recipeFunctionName);
+            LOG_1("No Recipe's function %1 found (probably 3rd party recipe). Wait for init...", _recipeFunctionName);
+            [
+                { !isNil (_this # 1) },
+                { _this call FUNC(initRecipe); },
+                [_recipeCfg, _recipeFunctionName],
+                2,
+                { ERROR_1("Failed to find recipe's function %1", _recipeFunctionName)}
+            ] call CBA_fnc_waitUntilAndExecute;
             continue;
         };
 
-        LOG_1("Recipe's function found, preparation initiated with %1 function", _recipeFunctionName);
-        [
-            getText (_recipeCfg >> "displayName"),
-            getText (_recipeCfg >> "tooltip"),
-            configProperties [_recipeCfg >> "Components"],
-            _recipeCfg
-        ] call _recipeFunction;
+        LOG_1("Recipe's function %1 found, start recipe's init", _recipeFunctionName);
+        [_recipeCfg, _recipeFunctionName] call FUNC(initRecipe);
     };
 } forEach _allRecipes;

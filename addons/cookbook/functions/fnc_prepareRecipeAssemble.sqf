@@ -46,7 +46,8 @@ private _fnc_formatAction = {
         [{true}, {_this call FUNC(checkAssemble)}],
         { _this call FUNC(assemble) },
         true,
-        [_switchToItem, _item2]
+        [_switchToItem, _item2],
+        false
     ]
 };
 

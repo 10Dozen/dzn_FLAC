@@ -21,7 +21,7 @@ _recipesClasses append ((configProperties [
     diag_log format["[COOKBOOK] %1", _recipeName];
 
     [
-        format [QGVAR(_%1_Enabled), _x], /* dzn_FLAC_cookbook_%1_Enabled -> dzn_FLAC_cookbook_Transform_Enabled */
+        format [QGVAR(%1_Enabled), _x], /* dzn_FLAC_cookbook_%1_Enabled -> dzn_FLAC_cookbook_Transform_Enabled */
         "CHECKBOX",
         [format ["Enable %1", _recipeName], _recipeDesc],
         ["dzn Flexible Accessories", "Cookbook"],

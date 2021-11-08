@@ -5,7 +5,7 @@ class CfgPatches {
         units[] = {};
         weapons[] = {};
         requiredVersion = REQUIRED_VERSION;
-        requiredAddons[] = {"cba_main","dzn_FLAC_main","dzn_FLAC_cookbook"};
+        requiredAddons[] = {"cba_main","dzn_FLAC_cookbook"};
         author = "10Dozen";
         license = "https://www.bohemia.net/community/licenses/arma-public-license-share-alike";
         VERSION_CONFIG;

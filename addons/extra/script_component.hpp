@@ -1,4 +1,4 @@
-#define COMPONENT cookbook
+#define COMPONENT extra
 #include "\z\dzn_FLAC\addons\main\script_mod.hpp"
 
 #define DEBUG_ENABLED_EXTRA
@@ -8,7 +8,7 @@
 #ifdef DEBUG_ENABLED_EXTRA
     #define DEBUG_MODE_FULL
 #endif
-    #ifdef DEBUG_SETTINGS_XTRA
+    #ifdef DEBUG_SETTINGS_EXTRA
     #define DEBUG_SETTINGS DEBUG_SETTINGS_EXTRA
 #endif
 

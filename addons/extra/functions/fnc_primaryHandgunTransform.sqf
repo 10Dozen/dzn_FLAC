@@ -26,10 +26,10 @@ TRACE_1("Item primary-secondary transform", _this);
 if (_slot == "RIFLE") then {
     // --- Primary -> Secondary
     private _attaches = primaryWeaponItems _unit;
-    private _magazine = primaryWeaponMagazine _unit;
+    private _magazine = primaryWeaponMagazine _unit # 0;
     private _ammo = _unit ammo _gun;
 
-    removeWeapon _gun;
+    _unit removeWeapon _gun;
     _unit addWeapon _switchToGun;
     { _unit addHandgunItem _x } forEach _attaches;
 
@@ -39,7 +39,12 @@ if (_slot == "RIFLE") then {
         params ["_unit","_switchedGun","_magazine","_ammo"];
         TRACE_1("[SWAP GUN] Loading magazine params", _this);
         // Restore auto-loaded magazine
-        _unit addMagazine [handgunMagazine _unit, _unit ammo _switchedGun];
+        _loadedMagazine = (handgunMagazine _unit) param [0];
+        TRACE_1("Loaded magazine", _loadedMagazine);
+        if (!isNil "_loadedMagazine") then {
+            TRACE_1("Adding back used magazine", _loadedMagazine);
+            _unit addMagazine [_loadedMagazine, _unit ammo _switchedGun];
+        };
         // Set magazine that was used before transformation
         _unit addWeaponItem [_switchedGun, [_magazine, _ammo, _switchedGun], true];
     }, [_unit, _switchToGun, _magazine, _ammo]] call CBA_fnc_execNextFrame;
@@ -47,10 +52,10 @@ if (_slot == "RIFLE") then {
 } else {
     // --- Secondary -> Primary
     private _attaches = handgunItems _unit;
-    private _magazine = handgunMagazine _unit;
+    private _magazine = handgunMagazine _unit # 0;
     private _ammo = _unit ammo _gun;
 
-    removeWeapon _gun;
+    _unit removeWeapon _gun;
     _unit addWeapon _switchToGun;
     { _unit addPrimaryWeaponItem _x } forEach _attaches;
 
@@ -60,7 +65,14 @@ if (_slot == "RIFLE") then {
         params ["_unit","_switchedGun","_magazine","_ammo"];
         TRACE_1("[SWAP GUN] Loading magazine params", _this);
         // Restore auto-loaded magazine
-        _unit addMagazine [primaryWeaponMagazine _unit, _unit ammo _switchedGun];
+        _loadedMagazine = (primaryWeaponMagazine _unit) param [0];
+
+        TRACE_1("Loaded magazine", _loadedMagazine);
+
+        if (!isNil "_loadedMagazine") then {
+            TRACE_1("Adding back used magazine", _loadedMagazine);
+            _unit addMagazine [_loadedMagazine, _unit ammo _switchedGun];
+        };
         // Set magazine that was used before transformation
         _unit addWeaponItem [_switchedGun, [_magazine, _ammo, _switchedGun], true];
     }, [_unit, _switchToGun, _magazine, _ammo]] call CBA_fnc_execNextFrame;

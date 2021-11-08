@@ -1,4 +1,6 @@
 PREP(readCookbook);
+PREP(initRecipe);
+
 PREP(prepareRecipeTransform);
 PREP(prepareRecipeAssemble);
 PREP(prepareRecipeDisassemble);

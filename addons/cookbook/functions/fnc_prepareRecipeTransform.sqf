@@ -38,14 +38,15 @@ private _fnc_formatAction = {
     TRACE_5("* Format Transform action", _item, _switchToItem, _switchItemName);
 
     [
-        format ["!%1", _item],
+        _item,
         ["UNIFORM_CONTAINER","VEST_CONTAINER","BACKPACK_CONTAINER"],
         [_displayName, _tooltip],
         [], "",
         { true },
         { _this call FUNC(transform) },
         true,
-        _switchToItem
+        _switchToItem,
+        false
     ]
 };
 
